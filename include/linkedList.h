@@ -3,19 +3,19 @@
 
 #include "stdtypes.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct node {
-    struct node *nextNode;
-    void *data;    
+typedef struct linkedList_node {
+    void *data;
+    struct linkedList_node *nextNode;
+    struct linkedList_node *prevNode;
+    struct linkedList_node *firstNode;
+    struct linkedList_node *lastNode;
+    uint64_t nodes;
 } linkedListNode_t;
 
-linkedListNode_t linkedListAppend(linkedListNode_t listHead, void* data);
-linkedListNode_t linkedListPrepend(linkedListNode_t listHead, void* data);
+void linkedListAppend(linkedListNode_t *listHead, void* data);
+void linkedListPrepend(linkedListNode_t *listHead, void* data);
 
-linkedListNode_t linkedListInsert(linkedListNode_t listHead, void* data, uint64_t index);
+void linkedListInsert(linkedListNode_t listHead, void* data, uint64_t index);
 linkedListNode_t linkedListRemove(linkedListNode_t listHead, uint64_t index);
 
 void* linkedListGetValue(linkedListNode_t listHead, uint64_t index);
@@ -36,9 +36,5 @@ uint64_t linkedListLength(linkedListNode_t listHead);
 void** linkedListToArray(linkedListNode_t listHead);
 
 void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, void*));
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
