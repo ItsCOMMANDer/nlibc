@@ -23,9 +23,6 @@ linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData);
 void linkedListAppend(const linkedListNode_t *listHead, void* data);
 void linkedListPrepend(linkedListNode_t *listHead, void* data);
 
-void linkedListInsert(linkedListNode_t listHead, void* data, uint64_t index);
-linkedListNode_t linkedListRemove(linkedListNode_t listHead, uint64_t index);
-
 void* linkedListGetValue(linkedListNode_t listHead, uint64_t index);
 
 linkedListNode_t linkedListSplit(linkedListNode_t listHead, uint64_t index);

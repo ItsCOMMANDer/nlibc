@@ -53,14 +53,18 @@ void linkedListPrepend(linkedListNode_t *listHead, void* data) {
     listHead->metaData->firstNode = newFirstNode;
 }
 
+void* linkedListGetValue(linkedListNode_t *listHead, uint64_t index) {
+    linkedListNode_t *linkedList = listHead;
+
+    for(int i = 0; i < index; i++) {
+        linkedList = linkedList->nextNode;
+    }
+
+    return linkedList->data;
+}
+
 /*
 
-void linkedListInsert(linkedListNode_t *listHead, void* data, uint64_t index) {}
-
-
-linkedListNode_t linkedListRemove(linkedListNode_t listHead, uint64_t index);
-
-void* linkedListGetValue(linkedListNode_t listHead, uint64_t index);
 
 linkedListNode_t linkedListSplit(linkedListNode_t listHead, uint64_t index);
 linkedListNode_t linkedListConnect(int count, ...);
