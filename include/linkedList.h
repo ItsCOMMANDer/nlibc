@@ -3,13 +3,19 @@
 
 #include "stdtypes.h"
 
+struct linkedList_node;
+
+struct linkedList_metaData {
+    struct linkedList_node *firstNode;
+    struct linkedList_node *lastNode;
+    uint64_t nodes;
+};
+
 typedef struct linkedList_node {
     void *data;
     struct linkedList_node *nextNode;
     struct linkedList_node *prevNode;
-    struct linkedList_node *firstNode;
-    struct linkedList_node *lastNode;
-    uint64_t nodes;
+    struct linkedList_metaData *metaData;
 } linkedListNode_t;
 
 void linkedListAppend(linkedListNode_t *listHead, void* data);

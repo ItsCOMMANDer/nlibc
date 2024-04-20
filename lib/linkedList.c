@@ -1,43 +1,35 @@
 #include "../include/linkedList.h"
 #include "../include/memory.h"
 
-void linkedListAppend(linkedListNode_t *listHead, void* data) {
-    linkedListNode_t *oldLastNode = listHead->lastNode;
-    linkedListNode_t *newLastNode = (linkedListNode_t*)g_mem_allocConfig.mem_alloc(sizeof(linkedListNode_t));
+linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData) {
+    linkedListNode_t *linkedList = memoryClearedMalloc(sizeof(linkedListNode_t), nodes);
+    struct linkedList_metaData *metaData = g_mem_allocConfig.mem_alloc(sizeof(struct linkedList_metaData));
     
-    listHead->lastNode = newLastNode;
-    listHead->nodes++;
+    metaData->nodes = nodes;
+    metaData->firstNode = &linkedList[0];
+    metaData->lastNode = &linkedList[nodes - 1];
 
-    oldLastNode->nextNode = newLastNode;
+    for(uint64_t index = 0; index < nodes - 1; index++) {linkedList[index].nextNode = &linkedList[index + 1];}
+    for(uint64_t index = nodes - 1; index > 0; index--) {linkedList[index].prevNode = &linkedList[index - 1];}
 
-    newLastNode->data = data;
-    newLastNode->nextNode = NULL;
-    newLastNode->prevNode = oldLastNode;
-    newLastNode->firstNode = listHead;
-    newLastNode->lastNode = newLastNode;
+    for(uint64_t index = 0; index < nodes; index++) {
+        linkedList[index].data = startingData;
+        linkedList[index].metaData = metaData;
+    }
+    return linkedList[0];
+}
+
+void linkedListAppend(linkedListNode_t *listHead, void* data) {
+    
 }
 
 
 void linkedListPrepend(linkedListNode_t *listHead, void* data) {
-    linkedListNode_t *oldFirstNode = listHead;
-    linkedListNode_t *newFirstNode = (linkedListNode_t*)g_mem_allocConfig.mem_alloc(sizeof(linkedListNode_t));
     
-    memcpy(newFirstNode, oldFirstNode, sizeof(linkedListNode_t));
-
-    newFirstNode->data = data;
-    newFirstNode->firstNode = newFirstNode;
-    newFirstNode->lastNode = oldFirstNode->lastNode;
-    newFirstNode->nextNode = oldFirstNode;
-    newFirstNode->nodes++;
-    newFirstNode->prevNode = NULL;
-
-    oldFirstNode->firstNode = newFirstNode;
-    oldFirstNode->prevNode = newFirstNode;
 }
 
 void linkedListInsert(linkedListNode_t *listHead, void* data, uint64_t index) {
-    linkedListNode_t *node = listHead;
-    for(int i = 0; i < index - 1; i++) node = node->nextNode;
+    
 
 }
 

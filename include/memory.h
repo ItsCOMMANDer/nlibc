@@ -12,5 +12,7 @@ struct {
     free
 };
 
-
-void memcpy(void* dest, void* src, size_t size);
+void* memoryFill(void *dest, int val, size_t length);
+void* memoryBufferFill(void* dest, void* src, size_t unitSize, uint64_t units);
+void memoryCopy(void* dest, void* src, size_t size);
+void* memoryClearedMalloc(size_t unitSize, uint64_t units);
