@@ -20,7 +20,7 @@ typedef struct linkedList_node {
 
 linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData);
 
-void linkedListAppend(linkedListNode_t *listHead, void* data);
+void linkedListAppend(const linkedListNode_t *listHead, void* data);
 void linkedListPrepend(linkedListNode_t *listHead, void* data);
 
 void linkedListInsert(linkedListNode_t listHead, void* data, uint64_t index);

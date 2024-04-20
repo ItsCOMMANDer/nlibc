@@ -16,22 +16,46 @@ linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData) {
         linkedList[index].data = startingData;
         linkedList[index].metaData = metaData;
     }
+
+    linkedList[nodes - 1].nextNode = NULL;
+    linkedList[0].prevNode = NULL;
+
     return linkedList[0];
 }
 
-void linkedListAppend(linkedListNode_t *listHead, void* data) {
-    
+void linkedListAppend(const linkedListNode_t *listHead, void* data) {
+    linkedListNode_t *newLastNode = memoryClearedMalloc(sizeof(linkedListNode_t), 1);
+    linkedListNode_t *oldLastNode = listHead->metaData->lastNode;
+
+    oldLastNode->nextNode = newLastNode;
+
+    newLastNode->prevNode = oldLastNode;
+    newLastNode->nextNode = NULL;
+    newLastNode->data = data;
+    newLastNode->metaData = listHead->metaData;
+
+    listHead->metaData->lastNode = newLastNode;
 }
 
 
 void linkedListPrepend(linkedListNode_t *listHead, void* data) {
-    
+    linkedListNode_t *newFirstNode = memoryClearedMalloc(sizeof(linkedListNode_t), 1);
+    linkedListNode_t *oldFirstNode = listHead->metaData->firstNode;
+
+    memoryCopy(oldFirstNode, newFirstNode, sizeof(linkedListNode_t));
+    oldFirstNode->prevNode = newFirstNode;
+
+    newFirstNode->prevNode = NULL;
+    newFirstNode->nextNode = oldFirstNode;
+    newFirstNode->data = data;
+    newFirstNode->metaData = listHead->metaData;
+
+    listHead->metaData->firstNode = newFirstNode;
 }
 
-void linkedListInsert(linkedListNode_t *listHead, void* data, uint64_t index) {
-    
+/*
 
-}
+void linkedListInsert(linkedListNode_t *listHead, void* data, uint64_t index) {}
 
 
 linkedListNode_t linkedListRemove(linkedListNode_t listHead, uint64_t index);
@@ -54,3 +78,5 @@ uint64_t linkedListLength(linkedListNode_t listHead);
 void** linkedListToArray(linkedListNode_t listHead);
 
 void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, void*));
+
+*/
