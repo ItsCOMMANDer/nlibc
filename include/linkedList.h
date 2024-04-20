@@ -18,6 +18,8 @@ typedef struct linkedList_node {
     struct linkedList_metaData *metaData;
 } linkedListNode_t;
 
+linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData);
+
 void linkedListAppend(linkedListNode_t *listHead, void* data);
 void linkedListPrepend(linkedListNode_t *listHead, void* data);
 
