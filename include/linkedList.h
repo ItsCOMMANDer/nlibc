@@ -25,7 +25,7 @@ void linkedListPrepend(linkedListNode_t *listHead, void* data);
 
 void* linkedListGetValue(linkedListNode_t *listHead, uint64_t index);
 
-linkedListNode_t linkedListClone(linkedListNode_t listHead);
+linkedListNode_t linkedListClone(const linkedListNode_t *listHead);
 
 linkedListNode_t linkedListSubList(linkedListNode_t listHead, uint64_t listStart, uint64_t listEnd);
 
