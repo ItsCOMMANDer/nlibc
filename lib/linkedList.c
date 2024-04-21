@@ -63,13 +63,35 @@ void* linkedListGetValue(linkedListNode_t *listHead, uint64_t index) {
     return linkedList->data;
 }
 
+linkedListNode_t linkedListClone(const linkedListNode_t *listHead) {
+    linkedListNode_t *newList = memoryClearedMalloc(sizeof(linkedListNode_t), listHead->metaData->nodes);
+
+    struct linkedList_metaData *newMetaData = memoryClearedMalloc(sizeof(struct linkedList_metaData), 1);
+
+    memoryCopy(newMetaData, newList->metaData, sizeof(struct linkedList_metaData));
+    newMetaData->firstNode = newList;
+    newMetaData->lastNode = &newList[listHead->metaData->nodes - 1];
+
+    linkedListNode_t *currentNode = listHead;
+
+    uint64_t index = 0;
+
+    while(currentNode->nextNode != NULL) {
+
+        memoryCopy(&newList[index], currentNode, sizeof(linkedListNode_t));
+        newList[index].metaData = newMetaData;
+
+        currentNode = currentNode->nextNode;
+    }
+
+    for(index = 0; index < newList->metaData->nodes - 1; index++) {newList[index].nextNode = &newList[index + 1];}
+    for(index = newList->metaData->nodes - 1; index > 0; index--) {newList[index].prevNode = &newList[index - 1];}
+
+    return newList[0];
+}
+
 /*
 
-
-linkedListNode_t linkedListSplit(linkedListNode_t listHead, uint64_t index);
-linkedListNode_t linkedListConnect(int count, ...);
-
-linkedListNode_t linkedListClone(linkedListNode_t listHead);
 
 linkedListNode_t linkedListSubList(linkedListNode_t listHead, uint64_t listStart, uint64_t listEnd);
 

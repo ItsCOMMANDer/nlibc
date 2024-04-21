@@ -23,10 +23,7 @@ linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData);
 void linkedListAppend(const linkedListNode_t *listHead, void* data);
 void linkedListPrepend(linkedListNode_t *listHead, void* data);
 
-void* linkedListGetValue(linkedListNode_t listHead, uint64_t index);
-
-linkedListNode_t linkedListSplit(linkedListNode_t listHead, uint64_t index);
-linkedListNode_t linkedListConnect(int count, ...);
+void* linkedListGetValue(linkedListNode_t *listHead, uint64_t index);
 
 linkedListNode_t linkedListClone(linkedListNode_t listHead);
 

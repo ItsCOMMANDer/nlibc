@@ -1,10 +1,6 @@
 #ifndef MYSTD_LIMITS_H
 #define MYSTD_LIMITS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Signed 64-bit integers
 #define SINT64_MIN -9223372036854775808LL
 #define SINT64_MAX 9223372036854775807LL
@@ -36,9 +32,5 @@ extern "C" {
 // Unsigned 8-bit integers
 #define UINT8_MIN 0
 #define UINT8_MAX 255
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
