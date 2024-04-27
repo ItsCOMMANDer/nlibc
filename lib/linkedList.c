@@ -72,16 +72,16 @@ linkedListNode_t linkedListClone(const linkedListNode_t *listHead) {
     newMetaData->firstNode = newList;
     newMetaData->lastNode = &newList[listHead->metaData->nodes - 1];
 
-    linkedListNode_t *currentNode = listHead;
+    linkedListNode_t currentNode = *listHead;
 
     uint64_t index = 0;
 
-    while(currentNode->nextNode != NULL) {
+    while(currentNode.nextNode != NULL) {
 
-        memoryCopy(&newList[index], currentNode, sizeof(linkedListNode_t));
+        memoryCopy(&newList[index], &currentNode, sizeof(linkedListNode_t));
         newList[index].metaData = newMetaData;
 
-        currentNode = currentNode->nextNode;
+        currentNode = *currentNode.nextNode;
     }
 
     for(index = 0; index < newList->metaData->nodes - 1; index++) {newList[index].nextNode = &newList[index + 1];}
@@ -90,19 +90,29 @@ linkedListNode_t linkedListClone(const linkedListNode_t *listHead) {
     return newList[0];
 }
 
+uint64_t linkedListLength(linkedListNode_t listHead) {
+    return listHead.metaData->nodes;
+}
+
 /*
 
 
 linkedListNode_t linkedListSubList(linkedListNode_t listHead, uint64_t listStart, uint64_t listEnd);
 
-linkedListNode_t linkedListDelete(linkedListNode_t listHead);
-
-linkedListNode_t linkedListCreateEmptyList(uint64_t amountOfEntries);
-
-uint64_t linkedListLength(linkedListNode_t listHead);
 
 void** linkedListToArray(linkedListNode_t listHead);
 
 void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, void*));
 
 */
+
+
+void  linkedListDelete(linkedListNode_t *listHead) {
+    struct linkedList_metaData *metaData = listHead->metaData;
+    linkedListNode_t *list = listHead;
+    while(list->nextNode != NULL) {
+        g_mem_allocConfig.mem_free(list);
+        list = list->nextNode; 
+    }
+    g_mem_allocConfig.mem_free(metaData);
+}

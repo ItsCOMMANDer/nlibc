@@ -30,16 +30,16 @@ typedef _Decimal32 float32_t;
 
 
 
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && (__STDC_VERSION__ < 202203L)
+//#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && (__STDC_VERSION__ < 202203L)
 
 #define bool _Bool
 
 #define true 1
 #define false 0
 
-#else
-#warning Booleans not supported in the current c version.
-#endif
+//#else
+//#pragma message("Booleans not supported in the current c version.")
+//#endif
 
 #define NULL 0
 #define NULL_PTR (void*)0

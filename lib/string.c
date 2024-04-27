@@ -58,6 +58,8 @@ bool stringLimit_is_uppercase(const char* source, const size_t limit) {
     return true;
 }
 
+/*
+
 char* relative_substring(char* destination, const char* source, uint64_t start, uint64_t end) {
     if(destination == NULL_PTR || source == NULL_PTR) return NULL_PTR;
     
@@ -96,15 +98,15 @@ char* absolute_substring(char* destination, const char* source, uint64_t start, 
     return destination;
 }
 
-#define MYSTD_STRING_ISEQUAL -1
+*/
 
 int string_compare(const char* str1, const char* str2) {
-    if(str1 == NULL_PTR || str2 == NULL_PTR) return -2;
+    if(str1 == NULL_PTR || str2 == NULL_PTR) return -1;
     for(uint64_t index = 0; index < max(stringLimitLength(str1, UINT64_MAX), stringLimitLength(str2, UINT64_MAX)); index++) {
-        if(str1[index] == '\0' && str2[index] == '\0') return -1;
-        if(str1[index] != str2[index]) return index;
+        if(str1[index] == '\0' && str2[index] == '\0') return 0;
+        if(str1[index] != str2[index]) return index + 1;
     }
-    return -1;
+    return 0;
 }
 
 int stringLimit_compare(const char* str1, const char* str2, uint64_t limit) {
@@ -146,4 +148,3 @@ char* stringLimit_to_uppercase(char* destination, const char* source, uint64_t l
     }
     return destination;
 }
-

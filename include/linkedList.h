@@ -27,16 +27,16 @@ void* linkedListGetValue(linkedListNode_t *listHead, uint64_t index);
 
 linkedListNode_t linkedListClone(const linkedListNode_t *listHead);
 
-linkedListNode_t linkedListSubList(linkedListNode_t listHead, uint64_t listStart, uint64_t listEnd);
+//linkedListNode_t linkedListSubList(linkedListNode_t listHead, uint64_t listStart, uint64_t listEnd);
 
-linkedListNode_t linkedListDelete(linkedListNode_t listHead);
+void linkedListDelete(linkedListNode_t *listHead);
 
 linkedListNode_t linkedListCreateEmptyList(uint64_t amountOfEntries);
 
 uint64_t linkedListLength(linkedListNode_t listHead);
 
-void** linkedListToArray(linkedListNode_t listHead);
+//void** linkedListToArray(linkedListNode_t listHead);
 
-void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, void*));
+//void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, void*));
 
 #endif
