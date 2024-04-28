@@ -3,7 +3,7 @@
 
 linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData) {
     linkedListNode_t *linkedList = memoryClearedMalloc(sizeof(linkedListNode_t), nodes);
-    struct linkedList_metaData *metaData = g_mem_allocConfig.mem_alloc(sizeof(struct linkedList_metaData));
+    struct linkedList_metaData *metaData = memoryAlloc(sizeof(struct linkedList_metaData));
     
     metaData->nodes = nodes;
     metaData->firstNode = &linkedList[0];
@@ -111,8 +111,8 @@ void  linkedListDelete(linkedListNode_t *listHead) {
     struct linkedList_metaData *metaData = listHead->metaData;
     linkedListNode_t *list = listHead;
     while(list->nextNode != NULL) {
-        g_mem_allocConfig.mem_free(list);
+        memoryFree(list);
         list = list->nextNode; 
     }
-    g_mem_allocConfig.mem_free(metaData);
+    memoryFree(metaData);
 }
