@@ -1,7 +1,7 @@
 #include "../include/linkedList.h"
 #include "../include/memory.h"
 
-linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData) {
+linkedListNode_t *linkedListCreateEmpty(uint64_t nodes, void* startingData) {
     linkedListNode_t *linkedList = memoryClearedMalloc(sizeof(linkedListNode_t), nodes);
     struct linkedList_metaData *metaData = memoryAlloc(sizeof(struct linkedList_metaData));
     
@@ -20,7 +20,7 @@ linkedListNode_t linkedListCreateEmpty(uint64_t nodes, void* startingData) {
     linkedList[nodes - 1].nextNode = NULL;
     linkedList[0].prevNode = NULL;
 
-    return linkedList[0];
+    return &linkedList[0];
 }
 
 void linkedListAppend(const linkedListNode_t *listHead, void* data) {
@@ -107,12 +107,4 @@ void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, voi
 */
 
 
-void  linkedListDelete(linkedListNode_t *listHead) {
-    struct linkedList_metaData *metaData = listHead->metaData;
-    linkedListNode_t *list = listHead;
-    while(list->nextNode != NULL) {
-        memoryFree(list);
-        list = list->nextNode; 
-    }
-    memoryFree(metaData);
-}
+void  linkedListDelete(linkedListNode_t *listHead, void (*deleteData)(void*)) {}

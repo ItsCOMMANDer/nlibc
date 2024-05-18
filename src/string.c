@@ -63,8 +63,8 @@ bool stringLimit_is_uppercase(const char* source, const size_t limit) {
 char* relative_substring(char* destination, const char* source, uint64_t start, uint64_t end) {
     if(destination == NULL_PTR || source == NULL_PTR) return NULL_PTR;
     
-    uint64_t substr_start = minimum(start, stringLimitLength(source, UINT64_MAX));
-    uint64_t substr_end = minimum(end, stringLimitLength(source, UINT64_MAX));
+    uint64_t substr_start = min(start, stringLimitLength(source, UINT64_MAX));
+    uint64_t substr_end = min(end, stringLimitLength(source, UINT64_MAX));
     uint64_t substringLength = substr_end - substr_start;
     
     for(uint64_t index = substr_start; index < substr_end; index++) {
@@ -79,8 +79,8 @@ char* relative_substring(char* destination, const char* source, uint64_t start, 
 char* absolute_substring(char* destination, const char* source, uint64_t start, uint64_t end) {
     if(destination == NULL_PTR || source == NULL_PTR) return NULL_PTR;
     
-    uint64_t substr_start = minimum(start, stringLimitLength(source, UINT64_MAX));
-    uint64_t substr_end = minimum(end, stringLimitLength(source, UINT64_MAX));
+    uint64_t substr_start = min(start, stringLimitLength(source, UINT64_MAX));
+    uint64_t substr_end = min(end, stringLimitLength(source, UINT64_MAX));
     uint64_t substringLength = absolute(substr_end - substr_start);
 
     if(substr_start < substr_end) {
