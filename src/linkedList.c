@@ -107,4 +107,18 @@ void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, voi
 */
 
 
-void  linkedListDelete(linkedListNode_t *listHead, void (*deleteData)(void*)) {}
+void  linkedListDelete(linkedListNode_t *listHead, void (*deleteData)(void*)) {
+    linkedListNode_t *currentNode = listHead->metaData->lastNode;
+    if(deleteData == NULL) {
+        while(currentNode != NULL) {
+            currentNode = currentNode->prevNode;
+            memoryFree(currentNode->nextNode);
+        }
+    } else {
+        while(currentNode != NULL) {
+            currentNode = currentNode->prevNode;
+            deleteData(currentNode->nextNode->data);
+            memoryFree(currentNode->nextNode);
+        }
+    }
+}

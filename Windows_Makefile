@@ -1,0 +1,36 @@
+TARGET = mystd.lib
+BUILD = build
+SOURCES = src
+INCLUDES = include
+
+# Ensure that paths are properly concatenated
+CURDIR = .
+OUTPUT = $(CURDIR)\$(BUILD)\$(TARGET)
+
+CFLAGS = /Ox
+INCLUDE = $(foreach dir,$(INCLUDES), /I$(CURDIR)\$(dir))
+
+CFILES = $(foreach dir,$(SOURCES),$(wildcard $(dir)\*.c))
+OBJFILES = $(foreach file,$(CFILES),$(BUILD)\$(notdir $(file:.c=.obj)))
+
+CC = cl
+LIB = lib
+
+SILENTCMD = @
+SILENTMSG = @echo
+
+all: $(OUTPUT)
+
+$(OUTPUT): $(OBJFILES)
+    $(SILENTCMD)$(LIB) /OUT:$@ $(OBJFILES)
+    $(SILENTMSG) Library $@ created.
+
+$(BUILD)\%.obj: $(SOURCES)\%.c
+    @if not exist $(BUILD) mkdir $(BUILD)
+    $(SILENTCMD)$(CC) $(CFLAGS) $(INCLUDE) /c $< /Fo$@
+    $(SILENTMSG) Compiled $< to $@
+
+clean:
+    del /Q $(BUILD)\*.obj $(OUTPUT)
+
+.PHONY: all clean
