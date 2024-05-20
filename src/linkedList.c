@@ -1,7 +1,7 @@
 #include "../include/linkedList.h"
 #include "../include/memory.h"
 
-linkedListNode_t *linkedListCreateEmpty(uint64_t nodes, void* startingData) {
+linkedListNode_t *linkedListCreateEmpty(uint64_t nodes, union linkedListTypes startingData) {
     linkedListNode_t *linkedList = memoryClearedMalloc(sizeof(linkedListNode_t), nodes);
     struct linkedList_metaData *metaData = memoryAlloc(sizeof(struct linkedList_metaData));
     
@@ -23,7 +23,7 @@ linkedListNode_t *linkedListCreateEmpty(uint64_t nodes, void* startingData) {
     return &linkedList[0];
 }
 
-void linkedListAppend(const linkedListNode_t *listHead, void* data) {
+void linkedListAppend(const linkedListNode_t *listHead, union linkedListTypes data) {
     linkedListNode_t *newLastNode = memoryClearedMalloc(sizeof(linkedListNode_t), 1);
     linkedListNode_t *oldLastNode = listHead->metaData->lastNode;
 
@@ -38,7 +38,7 @@ void linkedListAppend(const linkedListNode_t *listHead, void* data) {
 }
 
 
-void linkedListPrepend(linkedListNode_t *listHead, void* data) {
+void linkedListPrepend(linkedListNode_t *listHead, union linkedListTypes data) {
     linkedListNode_t *newFirstNode = memoryClearedMalloc(sizeof(linkedListNode_t), 1);
     linkedListNode_t *oldFirstNode = listHead->metaData->firstNode;
 
@@ -53,7 +53,7 @@ void linkedListPrepend(linkedListNode_t *listHead, void* data) {
     listHead->metaData->firstNode = newFirstNode;
 }
 
-void* linkedListGetValue(linkedListNode_t *listHead, uint64_t index) {
+union linkedListTypes linkedListGetValue(linkedListNode_t *listHead, uint64_t index) {
     linkedListNode_t *linkedList = listHead;
 
     for(int i = 0; i < index; i++) {
@@ -107,9 +107,9 @@ void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, voi
 */
 
 
-void  linkedListDelete(linkedListNode_t *listHead, void (*deleteData)(void*)) {
+void  linkedListDelete(linkedListNode_t *listHead) {
     linkedListNode_t *currentNode = listHead->metaData->lastNode;
-    if(deleteData == NULL) {
+    if(listHead->metaData->deleteData == NULL) {
         while(currentNode != NULL) {
             currentNode = currentNode->prevNode;
             memoryFree(currentNode->nextNode);
@@ -117,7 +117,7 @@ void  linkedListDelete(linkedListNode_t *listHead, void (*deleteData)(void*)) {
     } else {
         while(currentNode != NULL) {
             currentNode = currentNode->prevNode;
-            deleteData(currentNode->nextNode->data);
+            listHead->metaData->deleteData(currentNode->nextNode->data);
             memoryFree(currentNode->nextNode);
         }
     }
