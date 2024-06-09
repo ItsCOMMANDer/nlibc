@@ -1,7 +1,19 @@
-#ifndef MYSTD_LINKED_LIST_H
-#define MYSTD_LINKED_LIST_H
+#ifndef NLIBC_LINKED_LIST_H
+#define NLIBC_LINKED_LIST_H
 
 #include "stdtypes.h"
+
+union linkedListTypes;
+
+#define LINKEDLISTTYPES_CHAR(x) ((union linkedListTypes){.char_t = x})
+#define LINKEDLISTTYPES_SHORT(x) ((union linkedListTypes){.short_t = x})
+#define LINKEDLISTTYPES_INT(x) ((union linkedListTypes){.int_t = x})
+#define LINKEDLISTTYPES_LONG(x) ((union linkedListTypes){.long_t_t = x})
+#define LINKEDLISTTYPES_FLOAT(x) ((union linkedListTypes){.float_t = x})
+#define LINKEDLISTTYPES_BOOL(x) ((union linkedListTypes){.bool_t = x})
+#define LINKEDLISTTYPES_DOUBLE(x) ((union linkedListTypes){.double_t = x})
+#define LINKEDLISTTYPES_LONGLONG(x) ((union linkedListTypes){.longlong_t = x})
+#define LINKEDLISTTYPES_PTR(x) ((union linkedListTypes){.ptr_t = x})
 
 union linkedListTypes {
     char char_t;
@@ -13,48 +25,62 @@ union linkedListTypes {
     double double_t;
     long long longlong_t;
     void* ptr_t;
-
-    //_Decimal32 decimal32_t;
-    //_Decimal64 decimal64_t;       //idk, doesnt work with this for some reason
-    //_Decimal128 decimal128_t;
 };
 
 struct linkedList_node;
 
-struct linkedList_metaData {
-    struct linkedList_node *firstNode;
+typedef struct linkedList_head {
+    union {
+        struct linkedList_node *firstNode;  //the firstNode and begin of the list are the same
+        struct linkedList_node *list;
+    };
     struct linkedList_node *lastNode;
     uint64_t nodes;
 
     void (*deleteData)(union linkedListTypes);
-};
+    uint32_t (*compareData)(union linkedListTypes, union linkedListTypes); // returns -1 if first "object" is smaller than the second, 0 is theyre eqal and 1 if the second is larger
+} linkedListHead_t;
 
 typedef struct linkedList_node {
     union linkedListTypes data;
     struct linkedList_node *nextNode;
     struct linkedList_node *prevNode;
-    struct linkedList_metaData *metaData;
+    struct linkedList_head *listHead;
 } linkedListNode_t;
 
-linkedListNode_t *linkedListCreateEmpty(uint64_t nodes, union linkedListTypes startingData);
+void linkedList_create(linkedListHead_t *head);
+void linkedList_delete(linkedListHead_t *head);
 
-void linkedListAppend(const linkedListNode_t *listHead, union linkedListTypes data);
-void linkedListPrepend(linkedListNode_t *listHead, union linkedListTypes data);
+void linkedList_append(linkedListHead_t *head, union linkedListTypes data);
+void linkedList_prepend(linkedListHead_t *head, union linkedListTypes data);
+void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListTypes data);
 
-union linkedListTypes linkedListGetValue(linkedListNode_t *listHead, uint64_t index);
+void linkedList_removeLast(linkedListHead_t *head);
+void linkedList_removeFirst(linkedListHead_t *head);
+void linkedList_remove(linkedListHead_t *head, uint64_t index);
 
-linkedListNode_t linkedListClone(const linkedListNode_t *listHead);
+union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
+union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
+union linkedListTypes linkedList_getLast(linkedListHead_t *head);
 
-//linkedListNode_t linkedListSubList(linkedListNode_t listHead, uint64_t listStart, uint64_t listEnd);
+void linkedList_set(linkedListHead_t *head, uint64_t index, union linkedListTypes data);
+void linkedList_setFirst(linkedListHead_t *head, union linkedListTypes data);
+void linkedList_setLast(linkedListHead_t *head, union linkedListTypes data);
 
-void  linkedListDelete(linkedListNode_t *listHead);
+void linkedList_sort(linkedListHead_t *head);
 
-linkedListNode_t linkedListCreateEmptyList(uint64_t amountOfEntries);
+uint64_t linkedList_length(linkedListHead_t *head);
 
-uint64_t linkedListLength(linkedListNode_t listHead);
+bool linkedList_isEmpty(linkedListHead_t *head);
 
-//void** linkedListToArray(linkedListNode_t listHead);
+int64_t linkedList_find(linkedListHead_t *head, union linkedListTypes data);
 
-//void* linkedListReduce(linkedListNode_t listHead, void* (*reduceFunc)(void*, void*));
+bool linkedList_contains(linkedListHead_t *head, union linkedListTypes data);
+
+void linkedList_copy(linkedListHead_t *destenation, linkedListHead_t *source);
+
+void linkedList_reverse(linkedListHead_t *head);
+
+void linkedList_combine(linkedListHead_t *destenation, linkedListHead_t *source);
 
 #endif
