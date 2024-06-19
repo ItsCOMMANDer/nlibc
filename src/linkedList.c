@@ -126,11 +126,13 @@ void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListT
         return;
     }
 
+
     linkedListNode_t *currentNode = head->firstNode;
 
-    for(uint64_t i = 0; i < index - 1; i++) {
+    for(uint64_t i = 0; i < index; i++) {
         currentNode = currentNode->nextNode;
     }
+
 
     linkedListNode_t *newNode = head->memoryAllocate(1, sizeof(linkedListNode_t));
 
@@ -145,6 +147,7 @@ void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListT
 
     head->nodes++;
 
+    
     return;
 }
 

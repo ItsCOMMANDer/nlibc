@@ -13,9 +13,14 @@ int main(void) {
     list.memoryFree = free;
 
 
-    for(int i = 0; i < 16; i++) {
-        linkedList_append(&list, LINKEDLISTTYPES_INT(i*i));
-    }
+    linkedList_append(&list, LINKEDLISTTYPES_INT(10));
+    test_print_ints(&list);
+    linkedList_append(&list, LINKEDLISTTYPES_INT(20));
+    test_print_ints(&list);
+    linkedList_prepend(&list, LINKEDLISTTYPES_INT(30));
+    test_print_ints(&list);
+    linkedList_insert(&list, 1, LINKEDLISTTYPES_INT(42));
+
 
     test_print_ints(&list);
 
