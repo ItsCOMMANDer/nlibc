@@ -40,11 +40,10 @@ typedef struct linkedList_head {
     uint32_t (*data_compare)(union linkedListTypes, union linkedListTypes); // returns -1 if first "object" is smaller than the second, 0 is theyre eqal and 1 if the second is larger
     void (*data_delete)(union linkedListTypes);
     bool (*data_validate)(union linkedListTypes);
-    void (*data_rectify)(union linkedListTypes*);
+    void (*data_rectify)(union linkedListTypes);
     union linkedListTypes (*data_copy)(union linkedListTypes);
     void* (*memoryAllocate)(uint64_t, uint64_t);
     void (*memoryFree)(void*);
-    void* (*memoryAllocateData)(uint64_t, uint64_t);
     void (*memoryFreeData)(union linkedListTypes);
 
 } linkedListHead_t;
@@ -67,32 +66,35 @@ void linkedList_append(linkedListHead_t *head, union linkedListTypes data);
 void linkedList_prepend(linkedListHead_t *head, union linkedListTypes data);
 void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListTypes data);
 
-void linkedList_removeLast(linkedListHead_t *head);
-void linkedList_removeFirst(linkedListHead_t *head);
-void linkedList_remove(linkedListHead_t *head, uint64_t index);
+//void linkedList_removeLast(linkedListHead_t *head);
+//void linkedList_removeFirst(linkedListHead_t *head);
+//void linkedList_remove(linkedListHead_t *head, uint64_t index);
 
-union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
-union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
-union linkedListTypes linkedList_getLast(linkedListHead_t *head);
+//union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
+//union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
+//union linkedListTypes linkedList_getLast(linkedListHead_t *head);
 
-void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
-void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);
-void linkedList_setLast(const linkedListHead_t *head, union linkedListTypes data);
+//void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
+//void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);
+//void linkedList_setLast(const linkedListHead_t *head, union linkedListTypes data);
 
-void linkedList_sort(const linkedListHead_t *head);
+//void linkedList_sort(const linkedListHead_t *head);
 
-uint64_t linkedList_length(const linkedListHead_t *head);
+//uint64_t linkedList_length(const linkedListHead_t *head);
 
-bool linkedList_isEmpty(const linkedListHead_t *head);
+//bool linkedList_isEmpty(const linkedListHead_t *head);
 
-int64_t linkedList_find(const linkedListHead_t *head, union linkedListTypes data);
+//int64_t linkedList_find(const linkedListHead_t *head, union linkedListTypes data);
 
-bool linkedList_contains(const linkedListHead_t *head, union linkedListTypes data);
+//bool linkedList_contains(const linkedListHead_t *head, union linkedListTypes data);
 
-void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
+//void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 
-void linkedList_reverse(linkedListHead_t *head);
+//void linkedList_reverse(linkedListHead_t *head);
 
-void linkedList_combine(linkedListHead_t *destenation, const linkedListHead_t *source);
+//void linkedList_combine(linkedListHead_t *destenation, const linkedListHead_t *source);
+
+void test_print_ints(linkedListHead_t *head);
+
 
 #endif

@@ -22,7 +22,7 @@ void linkedList_delete(linkedListHead_t *head) {
 }
 
 bool linkedList_validate(const linkedListHead_t *head) {
-    if(head == NULL) return;
+    if(head == NULL) return false;
     if((head->firstNode->prevNode != NULL) || head->lastNode->nextNode != NULL) return false;
     
     linkedListNode_t *current_node = head->firstNode;
@@ -45,11 +45,108 @@ bool linkedList_validate(const linkedListHead_t *head) {
     return true;
 }
 
-//void linkedList_rectify(linkedListHead_t *head);
+void linkedList_rectify(linkedListHead_t *head) {
+    if(linkedList_validate(head)) return;
 
-//void linkedList_append(linkedListHead_t *head, union linkedListTypes data);
-//void linkedList_prepend(linkedListHead_t *head, union linkedListTypes data);
-//void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListTypes data);
+    linkedListNode_t *current_node = head->list;
+
+    while(current_node->prevNode != NULL) {
+        current_node = current_node->prevNode;
+    }
+
+    head->firstNode = current_node;
+
+    while(current_node->nextNode != NULL) {
+        if(!head->data_validate(current_node->data)) head->data_rectify(current_node->data);
+        current_node = current_node->nextNode;
+    }
+
+    head->lastNode = current_node;
+
+    return;
+}
+
+void linkedList_append(linkedListHead_t *head, union linkedListTypes data) {
+    if(head == NULL) return;
+    if(head->memoryAllocate == NULL) return;
+
+    linkedListNode_t *newNode = head->memoryAllocate(1,  sizeof(linkedListNode_t));
+    newNode->data = data;
+    newNode->listHead = head;
+    newNode->nextNode = NULL;
+    newNode->prevNode = head->lastNode;
+
+    if(head->nodes != 0) {
+        head->lastNode->nextNode = newNode;
+        head->lastNode = newNode;
+    } else {
+        head->lastNode = newNode;
+        head->firstNode = newNode;
+    }
+
+    head->nodes++;
+
+    return;
+}
+
+void linkedList_prepend(linkedListHead_t *head, union linkedListTypes data) {
+    if(head == NULL) return;
+    if(head->memoryAllocate == NULL) return;
+
+    linkedListNode_t *newNode = head->memoryAllocate(1, sizeof(linkedListNode_t));
+
+    newNode->data = data;
+    newNode->listHead = head;
+    newNode->nextNode = head->firstNode;
+    newNode->prevNode = NULL;
+
+    if(head->nodes != 0) {
+        head->firstNode->prevNode = newNode;
+        head->firstNode = newNode;
+    } else {
+        head->firstNode = newNode;
+        head->lastNode = newNode;
+    }
+
+    head->nodes++;
+
+    return;
+}
+
+void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListTypes data) {
+    if(head == NULL) return;
+    if(head->memoryAllocate == NULL) return;
+
+    if(index == 0) {
+        linkedList_prepend(head, data);
+        return;
+    }
+    if(index > head->nodes) {
+        linkedList_append(head, data);
+        return;
+    }
+
+    linkedListNode_t *currentNode = head->firstNode;
+
+    for(uint64_t i = 0; i < index - 1; i++) {
+        currentNode = currentNode->nextNode;
+    }
+
+    linkedListNode_t *newNode = head->memoryAllocate(1, sizeof(linkedListNode_t));
+
+    newNode->data = data;
+    newNode->listHead = head;
+    newNode->nextNode = currentNode;
+    newNode->prevNode = currentNode->prevNode;
+
+    newNode->prevNode->nextNode = newNode;
+
+    currentNode->prevNode = newNode;
+
+    head->nodes++;
+
+    return;
+}
 
 //void linkedList_removeLast(linkedListHead_t *head);
 //void linkedList_removeFirst(linkedListHead_t *head);
@@ -78,3 +175,16 @@ bool linkedList_validate(const linkedListHead_t *head) {
 //void linkedList_reverse(linkedListHead_t *head);
 
 //void linkedList_combine(linkedListHead_t *destenation, const linkedListHead_t *source);
+
+
+#include <stdio.h>
+
+void test_print_ints(linkedListHead_t *head) {
+    linkedListNode_t *current = head->firstNode;
+    while(current->nextNode != NULL) {
+        printf("%i ", current->data.int_t);
+        if(current->nextNode != NULL) {printf("-> ");}
+        current = current->nextNode;
+    }
+    printf("%i\n", current->data.int_t);
+}
