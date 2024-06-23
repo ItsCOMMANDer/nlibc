@@ -66,13 +66,15 @@ void linkedList_append(linkedListHead_t *head, union linkedListTypes data);
 void linkedList_prepend(linkedListHead_t *head, union linkedListTypes data);
 void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListTypes data);
 
-//void linkedList_removeLast(linkedListHead_t *head);
-//void linkedList_removeFirst(linkedListHead_t *head);
-//void linkedList_remove(linkedListHead_t *head, uint64_t index);
+void linkedList_removeLast(linkedListHead_t *head);
+void linkedList_removeFirst(linkedListHead_t *head);
+void linkedList_remove(linkedListHead_t *head, uint64_t index);
 
 //union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
-//union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
-//union linkedListTypes linkedList_getLast(linkedListHead_t *head);
+
+union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
+
+union linkedListTypes linkedList_getLast(linkedListHead_t *head);
 
 //void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
 //void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);

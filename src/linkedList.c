@@ -151,13 +151,110 @@ void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListT
     return;
 }
 
-//void linkedList_removeLast(linkedListHead_t *head);
-//void linkedList_removeFirst(linkedListHead_t *head);
-//void linkedList_remove(linkedListHead_t *head, uint64_t index);
+void linkedList_removeLast(linkedListHead_t *head) {
+    if(head == NULL) return;
+    if(head->memoryFree == NULL) return;
+
+    if(head->nodes == 0) return;
+
+    if(head->memoryFreeData != NULL) {head->memoryFreeData(head->lastNode->data);}
+
+    if(head->nodes == 1) {
+        head->memoryFree(head->lastNode);
+        head->lastNode = NULL;
+        head->firstNode = NULL;
+        head->nodes--;
+        return;
+    }
+
+    head->lastNode->prevNode->nextNode = NULL;
+
+    linkedListNode_t *old_node = head->lastNode;
+
+    head->lastNode = head->lastNode->prevNode;
+
+    head->memoryFree(old_node);
+
+    head->nodes--;
+    
+    return;
+}
+
+void linkedList_removeFirst(linkedListHead_t *head) {
+    if(head == NULL) return;
+    if(head->memoryFree == NULL) return;
+
+    if(head->nodes == 0) return;
+
+    if(head->memoryFreeData != NULL) {head->memoryFreeData(head->lastNode->data);}
+
+    if(head->nodes == 1) {
+        head->memoryFree(head->lastNode);
+        head->lastNode = NULL;
+        head->firstNode = NULL;
+        head->nodes--;
+        return;
+    }
+
+    head->firstNode->nextNode->prevNode = NULL;
+
+    linkedListNode_t *old_node = head->firstNode;
+
+    head->firstNode = head->firstNode->nextNode;
+
+    head->memoryFree(old_node);
+
+    head->nodes--;
+
+    return;
+
+}
+
+void linkedList_remove(linkedListHead_t *head, uint64_t index) {
+    if(head == NULL) return;
+    if(head->memoryFree == NULL) return;
+
+    if(index == 0) {
+        linkedList_removeFirst(head);
+        return;
+    }
+
+    if(index == head->nodes - 1) {
+        linkedList_removeLast(head);
+        return;
+    }
+
+    linkedListNode_t *currentNode = head->firstNode;
+
+    for(uint64_t i = 0; i < index; i++) {
+        currentNode = currentNode->nextNode;
+    }
+
+    currentNode->prevNode->nextNode = currentNode->nextNode;
+    currentNode->nextNode->prevNode = currentNode->prevNode;
+
+    if(head->memoryFreeData != NULL) {
+        head->memoryFreeData(currentNode->data);
+    }
+
+    head->memoryFree(currentNode);
+
+    head->nodes--;
+
+    return;
+}
 
 //union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
-//union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
-//union linkedListTypes linkedList_getLast(linkedListHead_t *head);
+
+union linkedListTypes linkedList_getFirst(linkedListHead_t *head) {
+    if(head == NULL) return;            //FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    return head->firstNode->data;
+}
+
+union linkedListTypes linkedList_getLast(linkedListHead_t *head) {
+    if(head == NULL) return;            //FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    return head->lastNode->data;
+}
 
 //void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
 //void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);
@@ -183,6 +280,10 @@ void linkedList_insert(linkedListHead_t *head, uint64_t index, union linkedListT
 #include <stdio.h>
 
 void test_print_ints(linkedListHead_t *head) {
+    if(head->nodes == 0) {
+        printf("LEER\n");
+        return;
+    }
     linkedListNode_t *current = head->firstNode;
     while(current->nextNode != NULL) {
         printf("%i ", current->data.int_t);
