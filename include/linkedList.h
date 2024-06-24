@@ -70,7 +70,7 @@ void linkedList_removeLast(linkedListHead_t *head);
 void linkedList_removeFirst(linkedListHead_t *head);
 void linkedList_remove(linkedListHead_t *head, uint64_t index);
 
-//union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
+union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
 
 union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
 

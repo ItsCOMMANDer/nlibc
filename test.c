@@ -18,6 +18,10 @@ int main(void) {
     linkedList_append(&list, LINKEDLISTTYPES_INT(30));
     test_print_ints(&list);
 
+    printf("Int: %i\n", linkedList_getFirst(&list).int_t);
+    printf("Int: %i\n", linkedList_getLast(&list).int_t);
+    printf("Int: %i\n", linkedList_get(&list, 1).int_t);
+
     linkedList_remove(&list, 2);
     test_print_ints(&list);
 

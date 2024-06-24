@@ -244,7 +244,16 @@ void linkedList_remove(linkedListHead_t *head, uint64_t index) {
     return;
 }
 
-//union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index);
+union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index) {
+    linkedListNode_t *currentNode = head->firstNode;
+
+    for(uint64_t i = 0; i < index; i++) {
+        currentNode = currentNode->nextNode;
+        if(currentNode->nextNode == NULL) break;
+    }
+
+    return currentNode->data;
+}
 
 union linkedListTypes linkedList_getFirst(linkedListHead_t *head) {
     if(head == NULL) return;            //FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -272,7 +281,7 @@ union linkedListTypes linkedList_getLast(linkedListHead_t *head) {
 
 //void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 
-//void linkedList_reverse(linkedListHead_t *head);
+//voisgd linkedList_reverse(linkedListHead_t *head);
 
 //void linkedList_combine(linkedListHead_t *destenation, const linkedListHead_t *source);
 
