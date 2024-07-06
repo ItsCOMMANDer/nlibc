@@ -76,15 +76,11 @@ union linkedListTypes linkedList_getFirst(linkedListHead_t *head);
 
 union linkedListTypes linkedList_getLast(linkedListHead_t *head);
 
-//void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
-//void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);
-//void linkedList_setLast(const linkedListHead_t *head, union linkedListTypes data);
+void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
+void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);
+void linkedList_setLast(const linkedListHead_t *head, union linkedListTypes data);
 
 //void linkedList_sort(const linkedListHead_t *head);
-
-//uint64_t linkedList_length(const linkedListHead_t *head);
-
-//bool linkedList_isEmpty(const linkedListHead_t *head);
 
 //int64_t linkedList_find(const linkedListHead_t *head, union linkedListTypes data);
 
@@ -92,7 +88,7 @@ union linkedListTypes linkedList_getLast(linkedListHead_t *head);
 
 //void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 
-//void linkedList_reverse(linkedListHead_t *head);
+void linkedList_reverse(linkedListHead_t *head);
 
 //void linkedList_combine(linkedListHead_t *destenation, const linkedListHead_t *source);
 

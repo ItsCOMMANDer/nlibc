@@ -245,6 +245,7 @@ void linkedList_remove(linkedListHead_t *head, uint64_t index) {
 }
 
 union linkedListTypes linkedList_get(linkedListHead_t *head, uint64_t index) {
+    if(head == NULL) return;  // FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     linkedListNode_t *currentNode = head->firstNode;
 
     for(uint64_t i = 0; i < index; i++) {
@@ -265,15 +266,45 @@ union linkedListTypes linkedList_getLast(linkedListHead_t *head) {
     return head->lastNode->data;
 }
 
-//void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data);
-//void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data);
-//void linkedList_setLast(const linkedListHead_t *head, union linkedListTypes data);
+void linkedList_set(const linkedListHead_t *head, uint64_t index, union linkedListTypes data) {
+    if(head == NULL) return;            //FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    linkedListNode_t *currentNode = head->firstNode;
+
+    for(uint64_t i = 0; i < index; i++) {
+        currentNode = currentNode->nextNode;
+        if(currentNode->nextNode == NULL) break;
+    }
+
+    currentNode->data = data;
+
+    return;
+}
+
+void linkedList_setFirst(const linkedListHead_t *head, union linkedListTypes data) {
+    if(head == NULL) return;
+    head->firstNode->data = data;
+
+    return;
+}
+
+void linkedList_setLast(const linkedListHead_t *head, union linkedListTypes data) {
+    if(head == NULL) return;
+    head->lastNode->data = data;
+
+    return;
+}
 
 //void linkedList_sort(const linkedListHead_t *head);
 
-//uint64_t linkedList_length(const linkedListHead_t *head);
+uint64_t linkedList_length(const linkedListHead_t *head) {
+    if(head == NULL) return;    //FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    return head->nodes;
+}
 
-//bool linkedList_isEmpty(const linkedListHead_t *head);
+bool linkedList_isEmpty(const linkedListHead_t *head) {
+    if(head == NULL) return true; //?????????????????
+    return (head->nodes == 0);
+}
 
 //int64_t linkedList_find(const linkedListHead_t *head, union linkedListTypes data);
 
@@ -281,7 +312,25 @@ union linkedListTypes linkedList_getLast(linkedListHead_t *head) {
 
 //void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 
-//voisgd linkedList_reverse(linkedListHead_t *head);
+void linkedList_reverse(linkedListHead_t *head) {
+    if (head == NULL) return;
+    if(head->nodes == NULL) return;
+
+    linkedListNode_t *frontNode = head->firstNode;
+    linkedListNode_t *backNode = head->lastNode;
+
+    while (frontNode != backNode && frontNode->prevNode != backNode) {
+        union linkedListTypes swap;
+        swap = frontNode->data;
+        frontNode->data = backNode->data;
+        backNode->data = swap;
+
+        frontNode = frontNode->nextNode;
+        backNode = backNode->prevNode;
+    }
+
+    return;
+}
 
 //void linkedList_combine(linkedListHead_t *destenation, const linkedListHead_t *source);
 
