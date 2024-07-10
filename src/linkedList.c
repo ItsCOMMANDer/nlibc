@@ -1,5 +1,5 @@
 #include "../include/linkedList.h"
-#include "../include/memory.h"
+#include "../include/memory.h" 
 
 void linkedList_delete(linkedListHead_t *head) {
     if(head == NULL) return;
@@ -313,7 +313,7 @@ bool linkedList_isEmpty(const linkedListHead_t *head) {
 //void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 
 void linkedList_reverse(linkedListHead_t *head) {
-    if (head == NULL) return;
+                  if (head == NULL) return;
     if(head->nodes == NULL) return;
 
     linkedListNode_t *frontNode = head->firstNode;
