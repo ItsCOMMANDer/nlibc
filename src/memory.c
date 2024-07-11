@@ -1,7 +1,10 @@
 #pragma once
 
-#include "../include/stdtypes.h"
-#include "../include/memory.h"
+#include <nlibc/stdtypes.h>
+#include <nlibc/memory.h>
+
+void* malloc( size_t size );
+void free( void* ptr );
 
 static struct {
     void* (*mem_alloc)(size_t);
@@ -27,7 +30,7 @@ void* memory_bufferFill(void* dest, void* src, size_t unitSize, uint64_t units) 
 }
 
 void memory_copy(void* dest, void* src, size_t size) {
-    for(int i = 0; i < size; i++) {
+    for(size_t i = 0; i < size; i++) {
         ((char*)dest)[i]= ((char*)src)[i];
     }
 }

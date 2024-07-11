@@ -1,10 +1,7 @@
-#pragma once
+#ifndef NLIBC_MATH_H
+#define NLIBC_MATH_H
 
-#include "stdtypes.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <nlibc/stdtypes.h>
 
 #define MIN_M(x,y) (x < y ? x : y)
 #define MAX_M(x,y) (x > y ? x : y)
@@ -17,6 +14,4 @@ int64_t max(int64_t a, int64_t b);
 uint64_t abs(int64_t n);
 int64_t power(int64_t a, int64_t b);
 
-#ifdef __cplusplus
-}
 #endif

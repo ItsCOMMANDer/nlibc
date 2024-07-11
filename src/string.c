@@ -1,8 +1,8 @@
-#include "../include/string.h"
+#include <nlibc/string.h>
 
-#include "../include/stdtypes.h"
-#include "../include/math.h"
-#include "../include/limits.h"
+#include <nlibc/stdtypes.h>
+#include <nlibc/math.h>
+#include <nlibc/limits.h>
 
 size_t stringLength(const char* source) {
     if(source == NULL_PTR) return 0;

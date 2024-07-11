@@ -1,8 +1,6 @@
 #pragma once
 
-#include "stdtypes.h"
-
-#include <stdlib.h>
+#include <nlibc/stdtypes.h>
 
 void* memory_fill(void *dest, int val, size_t length);
 void* memory_bufferFill(void* dest, void* src, size_t unitSize, uint64_t units);

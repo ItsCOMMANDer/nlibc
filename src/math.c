@@ -1,5 +1,5 @@
-#include "../include/math.h"
-#include  "../include/stdtypes.h"
+#include <nlibc/math.h>
+#include  <nlibc/stdtypes.h>
 
 
 int64_t min(int64_t a, int64_t b) {return a < b ? a : b;}

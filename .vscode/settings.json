@@ -1,3 +1,8 @@
 {
-    "C_Cpp.errorSquiggles": "disabled"
+    "files.associations": {
+        "linkedlist.h": "c",
+        "memory.h": "c",
+        "malloc.h": "c",
+        "stdtypes.h": "c"
+    }
 }

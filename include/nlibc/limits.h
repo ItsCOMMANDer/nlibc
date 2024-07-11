@@ -1,5 +1,5 @@
-#ifndef MYSTD_LIMITS_H
-#define MYSTD_LIMITS_H
+#ifndef NLIBC_LIMITS_H
+#define NLIBC_LIMITS_H
 
 // Signed 64-bit integers
 #define SINT64_MIN -9223372036854775808LL
