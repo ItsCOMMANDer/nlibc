@@ -1,32 +1,39 @@
-#! MADE BY CHATGPT, DO NOT CHANGE 
-
-CC := gcc
+SILENTCMD := @
+SILENTMSG := @echo
 
 TARGET := nlibc.a
-BUILD := build
-SOURCES := src
-INCLUDES := include
 
-INCLUDE := $(foreach dir, $(INCLUDES), -I$(dir))
+CC := gcc
+LD := gcc
+AR := ar
 
-CFILES := $(foreach dir, $(SOURCES), $(wildcard $(dir)/*.c))
-OFILES := $(patsubst $(SOURCES)/%.c,$(BUILD)/%.o,$(CFILES))
+CFLAGS := -Wall -Werror -Wextra -Wpedantic -Wconversion -Wshadow
+LDFLAGS := 
 
-FLAGS := -Wall -Wextra -fno-builtin
+SRC_DIRS := src
 
-# Create the build directory if it doesn't exist
-$(BUILD):
-	mkdir -p $(BUILD)/output
+SRC_FILES := $(foreach file,$(SRC_DIRS), $(wildcard $(file)/*c))
 
-all: $(BUILD)/output/$(TARGET)
+OBJ_FILES := $(SRC_FILES:.c=.o)
 
-$(BUILD)/output/$(TARGET): $(OFILES)
-	ar rcs $@ $^
+INCLUDE_DIRS := include
 
-$(BUILD)/%.o: $(SOURCES)/%.c | $(BUILD)
-	$(CC) -c $(FLAGS) $(INCLUDE) $< -o $@
+INCLUDES := $(foreach include, $(INCLUDE_DIRS), -I$(include))
+
+LIBS := 
+
+LIB := $(foreach library, $(LIBS), -l$(library))
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ_FILES)
+	$(SILENTMSG) $(ar) rcs  $@ $^
+	$(SILENTCMD)$(AR) rcs $@ $^
+
+%.o: %.c
+	$(SILENTMSG) $(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $^
+	$(SILENTCMD)$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $^
 
 clean:
-	rm -rf $(BUILD)
-
-.PHONY: all clean
+	$(SILENTMSG) rm $(OBJ_FILES) $(TARGET)
+	$(SILENTCMD)rm -f $(OBJ_FILES) $(TARGET)
