@@ -10,9 +10,9 @@ void linkedList_delete(linkedListHead_t *head) {
     if(head == NULL) return;
     linkedListNode_t *currentNode = head->firstNode;
     while(currentNode->nextNode != NULL) {
-        linkedListNode_t *next_node = currentNode->nextNode;
+        linkedListNode_t *nextNode = currentNode->nextNode;
         head->memory_deallocate(currentNode);
-        currentNode = next_node;
+        currentNode = nextNode;
     }
 }
 
@@ -235,7 +235,6 @@ void linkedList_set(const linkedListHead_t *head, uint64_t index, void* src) {
         currentNode = currentNode->nextNode;
         if(currentNode->nextNode == NULL) return; //TODO: Error handling
     }
-
     
     memcpy(currentNode->data, src, head->dataSize);
 
@@ -258,7 +257,56 @@ void linkedList_setLast(const linkedListHead_t *head, void* src) {
     return;
 }
 
-//void linkedList_sort(const linkedListHead_t *head);
+uint64_t partition(linkedListHead_t *head, uint64_t low, uint64_t high) {
+    void* pivot = linkedList_get(head, low);
+    uint64_t i = low;
+    uint64_t j = high;
+
+    void* tmpData = malloc(head->dataSize);
+
+    while(i < j) {
+        while((head->data_compare(linkedList_get(head, i), pivot, head) != 1) && (i <= high - 1)) {i++;}
+        
+        while((head->data_compare(linkedList_get(head, j), pivot) == 1) && (j >= low + 1)) {j--;}
+
+        if (i < j) {
+            void* iData = linkedList_get(head, i);
+            void* jData = linkedList_get(head, j);
+
+            memcpy(tmpData, iData, head->dataSize);
+            memcpy(iData, jData, head->dataSize);
+            memcpy(jData, tmpData, head->dataSize);
+            
+        }
+    }
+
+
+    void* lowData = linkedList_get(head, low);
+    void* jData = linkedList_get(head, j);
+
+    memcpy(tmpData, lowData, head->dataSize);
+    memcpy(lowData, jData, head->dataSize);
+    memcpy(jData, tmpData, head->dataSize);
+            
+    free(tmpData);
+
+    swap(&arr[low], &arr[j]);
+    return j;
+}
+
+void linkedListInternal_sort(linkedListHead_t *head, uint64_t low, uint64_t high) {
+    if(low < high) {
+        uint64_t partitionIndex = partition(head, low, high);
+
+        quickSort(head, low, partitionIndex - 1);
+        quickSort(head, partitionIndex + 1, high);
+    }
+}
+
+
+void linkedList_qsort(const linkedListHead_t *head) {
+    return;
+}
 
 uint64_t linkedList_length(const linkedListHead_t *head) {
     if(head == NULL) return 0; //TODO: Error handling
@@ -274,7 +322,20 @@ bool linkedList_isEmpty(const linkedListHead_t *head) {
 
 //int64_t linkedList_find(const linkedListHead_t *head, union linkedListTypes data);
 
-//bool linkedList_contains(const linkedListHead_t *head, union linkedListTypes data);
+bool linkedList_contains(const linkedListHead_t *head, void *data) {
+    if(head == NULL || data == NULL) return false;
+
+    linkedListNode_t *currentNode = head->firstNode;
+
+    if(currentNode == NULL) return false;
+
+    while(currentNode->nextNode != NULL) {
+        if(head->data_compare(data, currentNode->data, head) == 0) return true;
+        currentNode = currentNode->nextNode;
+    }
+
+    return false;
+}
 
 //void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 

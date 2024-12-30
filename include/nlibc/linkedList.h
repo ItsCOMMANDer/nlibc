@@ -19,7 +19,7 @@ typedef struct linkedList_head {
     uint64_t dataSize;
 
     //* Functions for Data operations
-    uint32_t (*data_compare)(void*, void*, linkedListHead_t*); // returns -1 if first "object" is smaller than the second, 0 is theyre eqal and 1 if the second is larger
+    uint32_t (*data_compare)(void*, void*, linkedListHead_t*); // returns -1 if first "object" is smaller than the second, 0 is theyre eqal and 1 if the first is larger
     void (*data_delete)(void*, linkedListHead_t*);
     void* (*data_copy)(void*, linkedListHead_t*);
     
@@ -58,7 +58,7 @@ void linkedList_setLast(const linkedListHead_t *head, void* data);
 
 //int64_t linkedList_find(const linkedListHead_t *head, union linkedListTypes data);
 
-//bool linkedList_contains(const linkedListHead_t *head, union linkedListTypes data);
+bool linkedList_contains(const linkedListHead_t *head, void *data);
 
 //void linkedList_copy(linkedListHead_t *destenation, const linkedListHead_t *source);
 
